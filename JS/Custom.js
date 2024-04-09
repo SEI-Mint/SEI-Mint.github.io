@@ -1,55 +1,34 @@
 (function(){
 
-	var Default = {};
-	Default.Event = {}
-	Default.Event.Event = function(Event)
-	{
-		Event = Event || window.event;
+    var URL      = "https://raw.githubusercontent.com/SEI-Mint/Resource.SEI-Mint/main/";
 
-		if(Event){
-			switch(Event.type){
-				case "keydown":
-					var Code = Event.which || Event.keyCode;
-					switch(Code){
-						case 123:
-							Event.preventDefault();
-							Event.stopPropagation();
-							break;
-						case 67:
-						case 73:
-							if(Event.shiftKey && Event.ctrlKey){
-								Event.preventDefault();
-								Event.stopPropagation();
-								
-								alert("不要偷看我拉 >///<");
-							}
-							break;
-						default:
-							break;
-					}
-					break;
-				case "contextmenu":
-					Event.preventDefault();
-					Event.stopPropagation();
-					break;	
-			}
-		}
-	};
-	Default.Event.Init = function()
-	{
-		var Self = Default.Event;
-		["contextmenu", "keydown"].forEach(function(Action, Index, List){
-			document.body.addEventListener(Action, Self.Event);
-		});
-	};
-	
-	var Onload = window.onload;
-	window.onload = function()
-	{
-		if((typeof Onload).toLocaleString() == "function"){
-			Onload();
-		}
-		Default.Event.Init();
-	}
+    var URN      = {
+        "Custom" : "JS/Custom.js"
+    };
+
+    var Include = {};
+
+    Include.Response = function(e)
+    {
+        var Target = e.target || e.srcElement || e.currentTarget;
+        if(Target.readyState == 4){
+            let Element_Script = document.createElement("script");
+            Element_Script.innerText = Target.responseText;
+            document.body.append(Element_Script);
+        }
+    };
+    
+    Include.Request  = function() {
+        let URI  = URL + URN["Custom"];
+        let HTTP = new XMLHttpRequest();
+        let Func = function(Action, Index, List) {
+            HTTP.addEventListener(Action, Include.Response);
+        };
+        HTTP.open("GET", URI, true);
+        ["progress", "load", "error", "abort"].forEach(Func);
+        HTTP.send();
+    };
+
+    Include.Request();
 
 })();
