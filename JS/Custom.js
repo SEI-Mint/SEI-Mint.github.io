@@ -1,25 +1,43 @@
 (function(){
+/***************************************************************************************************
+ ===================================================================================================
+    Declarations and Definitions
+ ===================================================================================================
+ **************************************************************************************************/
+    var URL     = "https://raw.githubusercontent.com/SEI-Mint/Resource.SEI-Mint/main/";
 
-    var URL      = "https://raw.githubusercontent.com/SEI-Mint/Resource.SEI-Mint/main/";
-
-    var URN      = {
+    var URN     = {
         "Custom" : "JS/Custom.js"
     };
 
     var Include = {};
 
-    Include.Response = function(e)
-    {
+/***************************************************************************************************
+ ===================================================================================================
+    Function [ General ]
+ ===================================================================================================
+ **************************************************************************************************/
+    var CurrentTime = function() {
+        let Timestamp = (new Date()).getTime();
+        return Timestamp;
+    }
+
+/***************************************************************************************************
+ ===================================================================================================
+    Function [ Include ]
+ ===================================================================================================
+ **************************************************************************************************/
+    Include.Response = function(e) {
         var Target = e.target || e.srcElement || e.currentTarget;
-        if(Target.readyState == 4){
+        if(Target.readyState == 4) {
             let Element_Script = document.createElement("script");
-            Element_Script.innerHTML = Target.responseText;
+            Element_Script.innerText = Target.responseText;
             document.body.append(Element_Script);
         }
     };
-    
+
     Include.Request  = function() {
-        let URI  = URL + URN["Custom"];
+        let URI  = URL + URN["Custom"] + "?v=" + CurrentTime().toString();
         let HTTP = new XMLHttpRequest();
         let Func = function(Action, Index, List) {
             HTTP.addEventListener(Action, Include.Response);
