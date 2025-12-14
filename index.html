@@ -1,29 +1,155 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<meta http-equiv="X-UA-Compatible" content="IE=9,IE=10,IE=11,IE=EDGE">
-		<title>Mint Site</title>
-		<link rel="icon" href="./Image/favicon.ico" type="image/x-icon">
-		<link rel="stylesheet" href="./CSS/Custom.css"/>
-		<script rel="text/javascript" src="./JS/Custom.js"></script>
-		<script rel="text/javascript" src="https://raw.githubusercontent.com/SEI-Mint/Resource.SEI-Mint/refs/heads/main/JS/test.js"></script>
-	</head>
-	<body>
-		<div class="Header">
-			<img class="WebSite" src="./Image/WebSite.png" alt="WebSite">
-			<h1>Mint Site</h1>
-		</div>
-		<div class="Middle">
-			<p></p>
-		</div>
-		<div class="Footer">
-			<div>
-				<span>E-mail:&nbsp;<a href="mailto:goodjoynice@gmail.com">goodjoynice@gmail.com</a></span><br>
-				<span>©Copyright Mint Cai</span>
-			</div>
-		</div>
-	</body>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="theme-color" content="#00B4A6">
+    <meta name="color-scheme" content="light dark">
+
+    <script rel="text/javascript" src="./JS/load.js"></script>
+    <style>
+        * {
+            margin: 0;
+            border: 0;
+            padding: 0;
+        }
+
+        :root {
+            /* Corporate / Content Website */
+            --header-corporate-height: clamp(72px, 9vh, 88px);
+            --footer-corporate-height: clamp(56px, 7vh, 72px);
+
+            /* Dashboard / Tools */
+            --header-dashboard-height: clamp(56px, 7vh, 64px);
+            --footer-dashboard-height: clamp(0px, 0vh, 48px);
+
+            /* Blog / Documentation */
+            --header-documentation-height: clamp(64px, 8vh, 72px);
+            --footer-documentation-height: clamp(80px, 10vh, 120px);
+
+            --color-primary: #006EBC;
+            --color-secondary: #00B4A6;
+        }
+
+        body {
+            --header-height: var(--header-corporate-height);
+            --footer-height: var(--footer-corporate-height);
+
+            width: 100%;
+            min-height: 100vh;
+
+            background-color: var(--color-secondary);
+        }
+
+        body[framework="blog"] {
+            --header-height: var(--header-documentation-height);
+            --footer-height: var(--footer-documentation-height);
+        }
+
+        body>div[id^="framework-"] {
+            width: 100%;
+        }
+
+        div[id="framework-header"] {
+            height: var(--header-height);
+        }
+
+        div[id="framework-main"] {
+            display: flow-root;
+            min-height: calc(100vh - var(--header-height) - var(--footer-height));
+        }
+
+        div[id="framework-footer"] {
+            height: var(--footer-height);
+        }
+
+        div[id="app-loading"] {
+            position: fixed;
+            top: 0;
+            left: 0;
+
+            width: 100vw;
+            height: 100vh;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+    <style>
+        /* Reference: https://cssloaders.github.io/ */
+        .loader {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            max-width: 6rem;
+            margin-top: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .loader:before,
+        .loader:after {
+            content: "";
+            position: absolute;
+            border-radius: 50%;
+            animation: pulsOut 1.8s ease-in-out infinite;
+            filter: drop-shadow(0 0 1rem rgba(255, 255, 255, 0.75));
+        }
+
+        .loader:before {
+            width: 100%;
+            padding-bottom: 100%;
+            box-shadow: inset 0 0 0 1rem #fff;
+            animation-name: pulsIn;
+        }
+
+        .loader:after {
+            width: calc(100% - 2rem);
+            padding-bottom: calc(100% - 2rem);
+            box-shadow: 0 0 0 0 #fff;
+        }
+
+        @keyframes pulsIn {
+            0% {
+                box-shadow: inset 0 0 0 1rem #fff;
+                opacity: 1;
+            }
+
+            50%,
+            100% {
+                box-shadow: inset 0 0 0 0 #fff;
+                opacity: 0;
+            }
+        }
+
+        @keyframes pulsOut {
+
+            0%,
+            50% {
+                box-shadow: 0 0 0 0 #fff;
+                opacity: 0;
+            }
+
+            100% {
+                box-shadow: 0 0 0 1rem #fff;
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+
+<body framework="blog">
+    <div id="framework-header"></div>
+    <div id="framework-main">
+        <div id="app-loading">
+            <div class="loader"></div>
+        </div>
+    </div>
+    <div id="framework-footer"></div>
+</body>
 
 </html>
