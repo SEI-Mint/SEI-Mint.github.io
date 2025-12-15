@@ -20,11 +20,12 @@
 
             const response = function (e) {
                 if (e?.target?.readyState == 4 && e.target.responseText) {
-                    let eScript = document.createElement("script");
+                    const eModule = document.getElementById("framework-module");
+                    const eScript = document.createElement("script");
                     eScript.setAttribute("rel", "text/javascript");
                     eScript.setAttribute("path", path);
                     eScript.innerHTML = e.target.responseText;
-                    document.body.append(eScript);
+                    eModule.appendChild(eScript);
                     self.loaded[path] = {
                         [module]: url
                     };
