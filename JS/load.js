@@ -3,7 +3,7 @@
         constructor(...args) {
             const argc = args.length;
 
-            this.loaded = new Set();
+            this.loaded = new Map();
         }
 
         timestamp() {
@@ -13,7 +13,8 @@
         require(path) {
             const self = this;
             const segment = path?.match(/[^\.]+/g);
-            const prefix = "https://raw.githubusercontent.com/SEI-Mint/Resource.SEI-Mint/refs/heads/main/";
+            const prefix = "/";
+            // const prefix = "https://raw.githubusercontent.com/SEI-Mint/Resource.SEI-Mint/refs/heads/main/";
             const extension = ".js";
             const module = segment[segment.length - 1];
             const url = prefix + segment.join('/') + extension + "?v=" + self.timestamp().toString();
@@ -26,9 +27,9 @@
                     eScript.setAttribute("path", path);
                     eScript.innerHTML = e.target.responseText;
                     eModule.appendChild(eScript);
-                    self.loaded[path] = {
+                    self.loaded.set(path, {
                         [module]: url
-                    };
+                    });
                 }
             };
 
@@ -47,6 +48,11 @@
         }
     };
 
+    const _ = function (...args) {
+        return args.join(" ");
+    };
+
+    window._ = _;
     window.M = new Mint();
     M.require('JS.mint');
 })(window, document);
