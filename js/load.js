@@ -53,5 +53,5 @@
 
     window._ = _;
     window.M = new Mint();
-    M.require('JS.mint');
+    M.require('js.mint');
 })(window, document);
